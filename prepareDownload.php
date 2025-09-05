@@ -7,13 +7,13 @@ define('YT_DLP_PATH', '/usr/local/bin/yt-dlp');
 function send_json_response($data, $success = true) { echo json_encode(['success' => $success, 'data' => $data]); exit; }
 function sanitize_filename($filename) { $filename = preg_replace('/[<>:"\/\\|?*]/', '', $filename); $filename = preg_replace('/\s+/', ' ', $filename); $filename = trim($filename); if (strlen($filename) > 150) { $filename = substr($filename, 0, 150); } if (empty($filename)) { $filename = 'downloaded_file'; } return $filename; }
 
-if (empty($_GET['url']) || empty($_GET['format']) || empty($_GET['title'])) { send_json_response(['message' => 'Parameter tidak lengkap.'], false); }
+if (empty($_GET['url']) || empty($_GET['format']) || empty($_GET['title'])) { send_json_response(['message' => 'Incomplete parameters.'], false); }
 $youtube_url = $_GET['url'];
 $target_format = strtolower($_GET['format']);
 $title = $_GET['title'];
 
 if (!in_array($target_format, ['mp3', 'mp4'])) { send_json_response(['message' => 'Format tidak valid.'], false); }
-if (!preg_match('/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/', $youtube_url)) { send_json_response(['message' => 'URL YouTube tidak valid.'], false); }
+if (!preg_match('/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/', $youtube_url)) { send_json_response(['message' => 'The YouTube URL is invalid.'], false); }
 
 $safe_url = escapeshellarg($youtube_url);
 $safe_filename = sanitize_filename($title);
@@ -32,8 +32,8 @@ if ($target_format === 'mp4') {
 $output = shell_exec($command . ' 2>&1');
 
 if (!file_exists($full_output_path)) {
-    error_log("Gagal membuat file. Perintah: $command. Output: $output");
-    send_json_response(['message' => 'Gagal mengonversi video di server.'], false);
+    error_log("Failed to create file. Command:: $command. Output: $output");
+    send_json_response(['message' => 'Failed to convert video on the server.'], false);
 }
 
 $download_link = 'downloader/' . $target_format . '/' . $filename_with_ext;

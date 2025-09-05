@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         resultContainer.classList.remove('hidden');
         videoInfo.classList.add('hidden');
         finalDownloadLink.classList.add('hidden');
-        statusText.textContent = 'Mendapatkan info video...';
+        statusText.textContent = 'Get video information....';
         progressBarInner.style.transition = 'none';
         progressBarInner.style.width = '5%';
         
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const format = document.querySelector('input[name="format"]:checked').value;
 
         try {
-            // --- TAHAP 1: Panggil getInfo.php (Cepat) ---
+            // --- STEP 1: Call getInfo.php (Quick) ---
             const infoResponse = await fetch(`getInfo.php?url=${encodeURIComponent(url)}`);
             const infoResult = await infoResponse.json();
 
@@ -35,17 +35,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(infoResult.data.message);
             }
 
-            // --- TAHAP 2: Tampilkan Info & Mulai Proses Download ---
+            // --- STEP 2: Display Info & Start Download Process ---
             const { title, thumbnail } = infoResult.data;
             videoTitle.textContent = title;
             videoThumbnail.src = thumbnail;
             videoInfo.classList.remove('hidden');
 
-            statusText.textContent = 'Info diterima. Mempersiapkan file unduhan...';
+            statusText.textContent = 'Info received. Preparing download file....';
             progressBarInner.style.transition = 'width 25s cubic-bezier(0.4, 0, 0.2, 1)';
             progressBarInner.style.width = '85%';
 
-            // Panggil prepareDownload.php (Lambat)
+            // Call prepareDownload.php (Slow)
             const prepareResponse = await fetch(`prepareDownload.php?url=${encodeURIComponent(url)}&format=${format}&title=${encodeURIComponent(title)}`);
             const prepareResult = await prepareResponse.json();
 
@@ -53,8 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(prepareResult.data.message);
             }
 
-            // --- TAHAP 3: Proses Selesai, Picu Download ---
-            statusText.textContent = 'File siap diunduh!';
+            // --- STEP 3: Process Complete, Trigger Download ---
+            statusText.textContent = 'File Ready to Download.';
             progressBarInner.style.transition = 'width 0.5s ease-out';
             progressBarInner.style.width = '100%';
 

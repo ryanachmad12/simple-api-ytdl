@@ -16,7 +16,7 @@
         <p class="subtitle">Free API and Open Source Project With YT-DLP Library</p>
 
         <form id="download-form">
-            <input type="text" id="youtube-url" name="url" placeholder="Tempelkan link YouTube di sini..." required>
+            <input type="text" id="youtube-url" name="url" placeholder="Paste the YouTube link here..." required>
             <div class="options">
                 <label>
                     <input type="radio" name="format" value="mp4" checked>
@@ -28,22 +28,22 @@
                 </label>
             </div>
             <button type="submit" id="process-btn">
-                <span class="btn-text">Proses & Unduh</span>
+                <span class="btn-text">Proccess & Download</span>
                 <div class="spinner hidden"></div>
             </button>
         </form>
 
         <div id="result-container" class="hidden">
-            <p id="status-text">Menganalisis link...</p>
+            <p id="status-text">Analyzing links...</p>
             <div class="progress-bar">
                 <div class="progress-bar-inner"></div>
             </div>
             <div id="video-info" class="hidden">
                 <img id="video-thumbnail" src="" alt="Video Thumbnail">
                 <div class="info-text">
-                    <h3 id="video-title">Judul Video Akan Tampil di Sini</h3>
+                    <h3 id="video-title">Video Title Will Appear Here</h3>
                     <a href="#" id="final-download-link" class="download-button hidden" download>
-                        Unduh File Sekarang
+                        Download File Now
                     </a>
                 </div>
             </div>
